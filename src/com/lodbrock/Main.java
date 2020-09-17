@@ -22,17 +22,17 @@ public class Main {
         };
 
         for(String line : testLines){
-            String result = checkPalindrome(line) ? "is palindrome." : "isn't palindrome.";
+            String result = isPalindrome(line) ? "is palindrome." : "isn't palindrome.";
             System.out.println(String.format("'%s' - %s", line, result));
         }
 
     }
 
-    public static boolean checkPalindrome(String text){
+    public static boolean isPalindrome(String text){
         if(text == null || text.equals("")) return false;
 
         int lCursor = 0, rCursor = text.length()-1; // set cursors
-        boolean isPalindrome = true;
+        boolean palindromeResult = true;
         boolean containsLetters = false;
 
         text = text.toLowerCase();
@@ -42,7 +42,7 @@ public class Main {
             while( !isLetter(text.charAt(lCursor)) ) {
                 lCursor++;
                 if(lCursor >= rCursor){
-                    isPalindrome = containsLetters;
+                    palindromeResult = containsLetters;
                     break;
                 }
             }
@@ -50,7 +50,7 @@ public class Main {
             while ( !isLetter(text.charAt(rCursor)) ){
                 rCursor--;
                 if(lCursor >= rCursor){
-                    isPalindrome = containsLetters;
+                    palindromeResult = containsLetters;
                     break;
                 }
             }
@@ -59,7 +59,7 @@ public class Main {
 
             //check if characters are equal
             if(text.charAt(lCursor) != text.charAt(rCursor)){
-                isPalindrome = false;
+                palindromeResult = false;
                 break;
             }
 
@@ -67,7 +67,7 @@ public class Main {
             rCursor--; // move right cursor left
         }
 
-        return isPalindrome;
+        return palindromeResult;
     }
 
 }
