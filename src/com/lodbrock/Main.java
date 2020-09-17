@@ -1,5 +1,8 @@
 package com.lodbrock;
 
+import java.time.Duration;
+import java.time.Instant;
+
 import static java.lang.Character.isLetter;
 
 public class Main {
@@ -20,9 +23,23 @@ public class Main {
                 "",
                 "Лепс спел"
         };
+        /*
+        Instant start, finish;
 
+        start = Instant.now();
+        isPalindrome("Аргентина манит негра"); // 12000000
+        finish = Instant.now();
+
+        System.out.println("isPalindrome : " + Duration.between(start, finish).getNano());
+
+        start = Instant.now();
+        isPalindrome2("Аргентина манит негра"); //4000000
+        finish = Instant.now();
+
+        System.out.println("isPalindrome2 : " + Duration.between(start, finish).getNano());
+        */
         for(String line : testLines){
-            String result = isPalindrome(line) ? "is palindrome." : "isn't palindrome.";
+            String result = isPalindrome2(line) ? "is palindrome." : "isn't palindrome.";
             System.out.println(String.format("'%s' - %s", line, result));
         }
 
@@ -69,5 +86,25 @@ public class Main {
 
         return palindromeResult;
     }
+
+    public static boolean isPalindrome2(String text){
+
+        String cleanText = "";
+        for(int i = 0; i < text.length(); i++ ){
+            if(Character.isLetter(text.charAt(i))){
+                cleanText += Character.toLowerCase(text.charAt(i));
+            }
+        }
+
+        if(cleanText.equals("")) return false;
+
+        for(int i = 0; i < cleanText.length(); i++) {
+            if (cleanText.charAt(i) != cleanText.charAt(cleanText.length() - 1 - i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
 }
