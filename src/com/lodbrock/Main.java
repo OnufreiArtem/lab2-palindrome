@@ -1,13 +1,15 @@
 package com.lodbrock;
 
-import java.time.Duration;
-import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static java.lang.Character.isLetter;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         String[] testLines = new String[] {
                 "mamam",
@@ -21,27 +23,16 @@ public class Main {
                 "a",
                 "\"joj\"",
                 "",
-                "Лепс спел"
+                "Лепс спел",
+                "mooml"
         };
-        /*
-        Instant start, finish;
 
-        start = Instant.now();
-        isPalindrome("Аргентина манит негра"); // 12000000
-        finish = Instant.now();
-
-        System.out.println("isPalindrome : " + Duration.between(start, finish).getNano());
-
-        start = Instant.now();
-        isPalindrome2("Аргентина манит негра"); //4000000
-        finish = Instant.now();
-
-        System.out.println("isPalindrome2 : " + Duration.between(start, finish).getNano());
-        */
         for(String line : testLines){
-            String result = isPalindrome2(line) ? "is palindrome." : "isn't palindrome.";
+            String result = isPalindrome4(line) ? "is palindrome." : "isn't palindrome.";
             System.out.println(String.format("'%s' - %s", line, result));
         }
+
+
 
     }
 
@@ -89,12 +80,7 @@ public class Main {
 
     public static boolean isPalindrome2(String text){
 
-        String cleanText = "";
-        for(int i = 0; i < text.length(); i++ ){
-            if(Character.isLetter(text.charAt(i))){
-                cleanText += Character.toLowerCase(text.charAt(i));
-            }
-        }
+        String cleanText = getLettersFromText(text);
 
         if(cleanText.equals("")) return false;
 
@@ -106,5 +92,36 @@ public class Main {
         return true;
     }
 
+    public static boolean isPalindrome3(String text){
+        String cleanText = getLettersFromText(text);
+        if(cleanText.equals("")) return false;
+        String reverseCleanText = new StringBuilder(cleanText).reverse().toString();
+        return cleanText.equals(reverseCleanText);
+    }
+
+    public static boolean isPalindrome4(String text){
+        List<Character> letters = new ArrayList<>();
+        for(char letter : getLettersFromText(text).toCharArray()){
+            letters.add(letter);
+        }
+
+        List<Character> reversedCopy = new ArrayList<>(letters);
+        Collections.reverse(reversedCopy);
+        for(int i = 0; i < letters.size(); i++){
+            if(!letters.get(i).equals(reversedCopy.get(i))) return false;
+        }
+        return true;
+    }
+
+    public static String getLettersFromText(String badText){
+        StringBuilder cleanText = new StringBuilder();
+        for(int i = 0; i < badText.length(); i++ ){
+            if(Character.isLetter(badText.charAt(i))){
+                cleanText.append(Character.toLowerCase(badText.charAt(i)));
+            }
+        }
+        return cleanText.toString();
+
+    }
 
 }
